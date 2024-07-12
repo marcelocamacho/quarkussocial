@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import jakarta.validation.ConstraintViolation;
+import jakarta.ws.rs.core.Response;
 
 public class ResponseError {
 
@@ -36,5 +37,9 @@ public class ResponseError {
         String message = "Validation Error";
         var responseError = new ResponseError(message, errors);
         return responseError;
+    }
+
+    public Response withStatusCode(int code){
+        return Response.status(code).entity(this).build();
     }
 }

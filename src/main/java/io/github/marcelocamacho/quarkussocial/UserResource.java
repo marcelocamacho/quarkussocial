@@ -43,12 +43,7 @@ public class UserResource {
         Set<ConstraintViolation<CreateUserRequest>> violations = validator.validate(userRequest);
 
         if(!violations.isEmpty()){
-        //    ConstraintViolation<CreateUserRequest> error = violations.stream().findAny().get();
-        //    String errorMessage = error.getMessage();
-        //    return Response.status(400).entity(errorMessage).build();
-
-            ResponseError responseError = ResponseError.createFromValidation(violations);
-            return Response.status(400).entity(responseError).build();
+            return ResponseError.createFromValidation(violations).withStatusCode(422);
         }
         User user = new User();
         user.setAge(userRequest.getAge());
@@ -56,7 +51,7 @@ public class UserResource {
         
         repository.persist(user);
         
-        return Response.ok(user).build();
+        return Response.status(Response.Status.CREATED.getStatusCode()).entity(user).build();
     }
 
     @GET
