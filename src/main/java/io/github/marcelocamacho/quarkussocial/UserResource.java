@@ -1,6 +1,6 @@
 package io.github.marcelocamacho.quarkussocial;
 
-import javax.validation.Validator;
+import java.util.Set;
 
 import io.github.marcelocamacho.quarkussocial.dto.CreateUserRequest;
 import io.github.marcelocamacho.quarkussocial.model.User;
@@ -8,6 +8,8 @@ import io.github.marcelocamacho.quarkussocial.repository.UserRepository;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validator;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -25,17 +27,25 @@ import jakarta.ws.rs.core.Response;
 public class UserResource {
 
     private UserRepository repository;
-// Faz a injeção do repository
+    private Validator validator;
+    
+    // Faz a injeção do repository
     @Inject
-    public UserResource(UserRepository repository){
+    public UserResource(UserRepository repository, Validator validator){
         this.repository = repository;
-        
+        this.validator = validator;    
     }
     
     @POST
     @Transactional
     public Response createUser(CreateUserRequest userRequest){
-        
+        Set<ConstraintViolation<CreateUserRequest>> violations = validator.validate(userRequest);
+
+        if(!violations.isEmpty()){
+            ConstraintViolation<CreateUserRequest> error = violations.stream().findAny().get();
+            String errorMessage = error.getMessage();
+            return Response.status(400).entity(errorMessage).build();
+        }
         User user = new User();
         user.setAge(userRequest.getAge());
         user.setName(userRequest.getName());

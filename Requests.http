@@ -12,11 +12,9 @@ content-type: application/json
 ###
 GET {{baseUrl}}/users
 
-###
-DELETE {{baseUrl}}/users/2
 
 ###
-PUT {{baseUrl}}/users/3
+PUT {{baseUrl}}/users/4
 content-type: application/json
 
 {
@@ -24,3 +22,5 @@ content-type: application/json
     "age": 14
 }
 
+###
+DELETE {{baseUrl}}/users/4

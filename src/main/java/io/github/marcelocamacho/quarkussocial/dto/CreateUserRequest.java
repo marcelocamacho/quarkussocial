@@ -1,11 +1,14 @@
 package io.github.marcelocamacho.quarkussocial.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class CreateUserRequest {
 
-   // @NotBlank(message = "Name field is required")
+    @NotBlank(message = "Name field is required")
     private String name;
     
-   // @NotNull(message = "Age field is required.")
+    @NotNull(message = "Age field is required.")
     private Integer age;
     public String getName() {
         return name;
