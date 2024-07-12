@@ -1,7 +1,15 @@
 package io.github.marcelocamacho.quarkussocial.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public class FieldError {
+    @Getter
+    @Setter
     private String field;
+    
+    @Getter
+    @Setter
     private String message;
 
 
@@ -10,16 +18,5 @@ public class FieldError {
         this.field = field;
         this.message = message;
     }
-    public String getField() {
-        return field;
-    }
-    public void setField(String field) {
-        this.field = field;
-    }
-    public String getMessage() {
-        return message;
-    }
-    public void setMessage(String message) {
-        this.message = message;
-    }
+
 }

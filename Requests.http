@@ -14,7 +14,7 @@ GET {{baseUrl}}/users
 
 
 ###
-PUT {{baseUrl}}/users/5
+PUT {{baseUrl}}/users/11
 content-type: application/json
 
 {
@@ -23,4 +23,4 @@ content-type: application/json
 }
 
 ###
-DELETE {{baseUrl}}/users/5
+DELETE {{baseUrl}}/users/3
