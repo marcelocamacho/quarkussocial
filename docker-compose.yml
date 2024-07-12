@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  database_quarkus:
+    image: postgres
+    container_name: database_quarkus
+    restart: always
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=docker
+      - POSTGRES_PASSWORD=quarkus
+      - POSTGRES_DB=quarkussocial
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+    driver: local
+# docker-compose up --force-recreate -d
+# docker logs rentalx -f

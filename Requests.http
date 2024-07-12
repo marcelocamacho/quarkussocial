@@ -1,0 +1,26 @@
+@baseUrl = http://localhost:8080
+
+### 
+POST {{baseUrl}}/users HTTP/1.1
+content-type: application/json
+
+{
+    "name": "sample2",
+    "age": 21
+}
+
+###
+GET {{baseUrl}}/users
+
+###
+DELETE {{baseUrl}}/users/2
+
+###
+PUT {{baseUrl}}/users/3
+content-type: application/json
+
+{
+    "name": "Marcelo 4",
+    "age": 14
+}
+
