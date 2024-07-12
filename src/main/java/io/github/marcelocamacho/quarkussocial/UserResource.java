@@ -3,6 +3,7 @@ package io.github.marcelocamacho.quarkussocial;
 import java.util.Set;
 
 import io.github.marcelocamacho.quarkussocial.dto.CreateUserRequest;
+import io.github.marcelocamacho.quarkussocial.dto.ResponseError;
 import io.github.marcelocamacho.quarkussocial.model.User;
 import io.github.marcelocamacho.quarkussocial.repository.UserRepository;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
@@ -42,9 +43,12 @@ public class UserResource {
         Set<ConstraintViolation<CreateUserRequest>> violations = validator.validate(userRequest);
 
         if(!violations.isEmpty()){
-            ConstraintViolation<CreateUserRequest> error = violations.stream().findAny().get();
-            String errorMessage = error.getMessage();
-            return Response.status(400).entity(errorMessage).build();
+        //    ConstraintViolation<CreateUserRequest> error = violations.stream().findAny().get();
+        //    String errorMessage = error.getMessage();
+        //    return Response.status(400).entity(errorMessage).build();
+
+            ResponseError responseError = ResponseError.createFromValidation(violations);
+            return Response.status(400).entity(responseError).build();
         }
         User user = new User();
         user.setAge(userRequest.getAge());
