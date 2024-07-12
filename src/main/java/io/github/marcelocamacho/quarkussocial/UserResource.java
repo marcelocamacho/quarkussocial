@@ -43,7 +43,7 @@ public class UserResource {
         Set<ConstraintViolation<CreateUserRequest>> violations = validator.validate(userRequest);
 
         if(!violations.isEmpty()){
-            return ResponseError.createFromValidation(violations).withStatusCode(422);
+            return ResponseError.createFromValidation(violations).withStatusCode(ResponseError.UNPROCESSABLE_ENTITY_STATUS);
         }
         User user = new User();
         user.setAge(userRequest.getAge());
@@ -68,9 +68,9 @@ public class UserResource {
         User user = repository.findById(id);
         if(user != null){
             repository.delete(user);
-            return Response.ok().build();
+            return Response.accepted().build();
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return Response.noContent().build();
     }
 
     @PUT
@@ -81,8 +81,8 @@ public class UserResource {
         if(user != null){
             user.setName(userData.getName());
             user.setAge(userData.getAge());
-            return Response.ok().build();
+            return Response.accepted().build();
         }
-        return Response.status(Response.Status.NOT_FOUND).build();
+        return Response.noContent().build();
     }
 }
