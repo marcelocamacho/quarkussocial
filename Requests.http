@@ -1,26 +1,53 @@
 @baseUrl = http://localhost:8080
 
-### 
-POST {{baseUrl}}/users
-content-type: application/json
+# /USERS
 
-{
-    "name": "sample2",
-    "age": 21
-}
+    ### 
+    POST {{baseUrl}}/users
+    content-type: application/json
 
-###
-GET {{baseUrl}}/users
+    {
+        "name": "sample2",
+        "age": 21
+    }
+
+    ###
+    GET {{baseUrl}}/users
 
 
-###
-PUT {{baseUrl}}/users/11
-content-type: application/json
+    ###
+    PUT {{baseUrl}}/users/11
+    content-type: application/json
 
-{
-    "name": "Marcelo 4",
-    "age": 14
-}
+    {
+        "name": "Marcelo 4",
+        "age": 14
+    }
 
-###
-DELETE {{baseUrl}}/users/3
+    ###
+    DELETE {{baseUrl}}/users/3
+
+    ###
+# /POST
+    ###
+    GET {{baseUrl}}/users/7/posts
+    ###
+    GET {{baseUrl}}/users/99/posts
+
+    ###
+    POST {{baseUrl}}/users/7/posts
+    Content-Type: application/json
+
+    {
+        "text": "Está sendo ótimo"
+    }
+    ###
+    ###
+    POST {{baseUrl}}/users/99/posts
+    Content-Type: application/json
+
+    {
+        "text": "Primeiro mês de empresa"
+    }
+
+
