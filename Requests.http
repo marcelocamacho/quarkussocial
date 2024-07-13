@@ -28,7 +28,7 @@
     DELETE {{baseUrl}}/users/3
 
     ###
-# /POST
+# /POSTS
     ###
     GET {{baseUrl}}/users/7/posts
     ###
@@ -51,3 +51,15 @@
     }
 
 
+# FOLLOWES
+    ###
+    GET {{baseUrl}}/users/6/followers
+    ###
+    GET {{baseUrl}}/users/1/followers
+    ###
+    {{baseUrl}}/users/6/followers
+    Content-Type: application/json
+
+    {
+        "followerId": 8
+    }
