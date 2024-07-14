@@ -7,22 +7,24 @@
     content-type: application/json
 
     {
-        "name": "sample2",
+        "name": "sample17",
         "age": 21
     }
+    ###
 
     ###
     GET {{baseUrl}}/users
-
+    ###
 
     ###
     PUT {{baseUrl}}/users/11
     content-type: application/json
 
     {
-        "name": "Marcelo 4",
+        "name": "Marcelo 20",
         "age": 14
     }
+    ###
 
     ###
     DELETE {{baseUrl}}/users/3
@@ -51,15 +53,17 @@
     }
 
 
-# FOLLOWES
+# /FOLLOWES
     ###
     GET {{baseUrl}}/users/6/followers
     ###
     GET {{baseUrl}}/users/1/followers
     ###
-    {{baseUrl}}/users/6/followers
+    PUT {{baseUrl}}/users/6/followers
     Content-Type: application/json
 
     {
-        "followerId": 8
+        "followerId": 17
     }
+    ###
+    DELETE {{baseUrl}}/users/6/followers?followerId=11
