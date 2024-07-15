@@ -32,7 +32,9 @@
     ###
 # /POSTS
     ###
-    GET {{baseUrl}}/users/7/posts
+    GET {{baseUrl}}/users/6/posts
+    followerId: 99
+    
     ###
     GET {{baseUrl}}/users/99/posts
 
@@ -45,11 +47,11 @@
     }
     ###
     ###
-    POST {{baseUrl}}/users/99/posts
+    POST {{baseUrl}}/users/6/posts
     Content-Type: application/json
 
     {
-        "text": "Primeiro mês de empresa"
+        "text": "Segundo post"
     }
 
 

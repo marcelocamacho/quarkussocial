@@ -6,6 +6,7 @@ import io.github.marcelocamacho.quarkussocial.dto.CreatePostRequest;
 import io.github.marcelocamacho.quarkussocial.dto.PostResponse;
 import io.github.marcelocamacho.quarkussocial.model.Post;
 import io.github.marcelocamacho.quarkussocial.model.User;
+import io.github.marcelocamacho.quarkussocial.repository.FollowerRepository;
 import io.github.marcelocamacho.quarkussocial.repository.PostRepository;
 import io.github.marcelocamacho.quarkussocial.repository.UserRepository;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
@@ -13,6 +14,7 @@ import io.quarkus.panache.common.Sort;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.HeaderParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -27,10 +29,12 @@ public class PostResource {
     
     private UserRepository userRepository;
     private PostRepository postRepository;
+    FollowerRepository followerRepository;
 
-    public PostResource(UserRepository userRepository,PostRepository postRepository){
+    public PostResource(UserRepository userRepository,PostRepository postRepository, FollowerRepository followerRepository){
         this.userRepository = userRepository;
         this.postRepository = postRepository;
+        this.followerRepository = followerRepository;
     }
 
     @POST
@@ -53,11 +57,22 @@ public class PostResource {
     }
 
     @GET
-    public Response listPost(@PathParam("userId") Long userId){
+    public Response listPost(@PathParam("userId") Long userId, @HeaderParam("followerId") Long followerId){
+
+        if(followerId == null){
+            return Response.status(Response.Status.BAD_REQUEST).entity("Your forgot header followeId").build();
+        }
 
         User user = userRepository.findById(userId);
         if(user == null){
             return Response.status(Response.Status.NOT_FOUND).build();
+        }
+
+        User follower = userRepository.findById(followerId);
+        boolean isFollower = followerRepository.follows(follower, user);
+
+        if(!isFollower && !followerId.equals(userId)){
+            return Response.status(Response.Status.FORBIDDEN).entity("You can't see these posts.").build();
         }
 
         PanacheQuery<Post> query = postRepository.find("user", Sort.by("dateTime",Sort.Direction.Descending) ,user);
